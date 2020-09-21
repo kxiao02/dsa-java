@@ -10,9 +10,9 @@ public class LongIntegerQuiz extends LongInteger{
 
     @Override
     protected void addDifferentSign(LongInteger n) {
-        int  m = Math.max(digits.length, n.digits.length), tmp = compareAbs(n), e;
+        int  m = Math.max(digits.length, n.digits.length), e;
         byte[] result = new byte[m], big = digits, small = n.digits;
-        if (tmp < 0){
+        if (compareAbs(n) < 0) {
             big = n.digits;
             small = digits;
             this.sign = n.sign;

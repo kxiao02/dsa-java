@@ -1,4 +1,4 @@
-package edu.emory.cs.utils;
+package edu.emory.cs.algebraic;
 
 import edu.emory.cs.algebraic.LongIntegerQuiz;
 import edu.emory.cs.algebraic.LongInteger;
