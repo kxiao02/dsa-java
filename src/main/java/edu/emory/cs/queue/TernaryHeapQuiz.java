@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQueue<T> {
     private final List<T> keys;
-    private final int D = 3;
+    private final int D = 3; // Support D-ary heap
 
     public TernaryHeapQuiz() {
         this(Comparator.naturalOrder());
@@ -24,6 +24,10 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
         return keys.size() - 1;
     }
 
+    private boolean lessThan(int i1, int i2) {
+        return priority.compare(keys.get(i1), keys.get(i2)) < 0;
+    }
+
     @Override
     public void add(T key) {
         keys.add(key);
@@ -31,8 +35,8 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
     }
 
     private void swim(int k) {
-        for (; 1 < k && compare(((k - 1) / D) + 1, k) < 0; k = ((k - 1) / D) + 1)
-            Collections.swap(keys, ((k - 1) / D) + 1, k);
+        for (; 1 < k && lessThan((k + D - 1) / D, k); k = (k + D - 1) / D)
+            Collections.swap(keys, (k + D - 1) / D, k);
     }
 
     @Override
@@ -45,15 +49,12 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
     }
 
     private void sink() {
-        for (int k = 1, c = 2; c <= size(); k = c, c = (k - 1) * D + 2) {
-            for (int i = (k - 1) * D + 3; i <= size(); i++)
-                if (compare(c, i) < 0) c = i;
-            if (compare(k, c) >= 0) break;
+        for (int k = 1, c = 2; c <= size(); k = c, c = (k - 1) * D + 1) {
+            for (int i = 1; i < D && i <= size() - c; i++)
+                if(lessThan(c, c + i)) c += i;
+            if (!lessThan(k, c)) break;
             Collections.swap(keys, k, c);
         }
     }
-
-    private int compare(int i1, int i2) {
-        return priority.compare(keys.get(i1), keys.get(i2));
-    }
 }
+
