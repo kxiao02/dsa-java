@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQueue<T> {
     private final List<T> keys;
-    private final int D = 3; // Support D-ary heap
+//    private final int D = 3; // Support D-ary heap
 
     public TernaryHeapQuiz() {
         this(Comparator.naturalOrder());
@@ -24,8 +24,8 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
         return keys.size() - 1;
     }
 
-    private boolean lessThan(int i1, int i2) {
-        return priority.compare(keys.get(i1), keys.get(i2)) < 0;
+    private int compare(int i1, int i2) {
+        return priority.compare(keys.get(i1), keys.get(i2));
     }
 
     @Override
@@ -34,9 +34,11 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
         swim(size());
     }
 
+    //(k + D - 1) / D
+
     private void swim(int k) {
-        for (; 1 < k && lessThan((k + D - 1) / D, k); k = (k + D - 1) / D)
-            Collections.swap(keys, (k + D - 1) / D, k);
+        for (; 1 < k && compare((k + 2) / 3, k) < 0; k = (k + 2) / 3)
+            Collections.swap(keys, (k + 2) / 3, k);
     }
 
     @Override
@@ -49,12 +51,35 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
     }
 
     private void sink() {
-        for (int k = 1, c = 2; c <= size(); k = c, c = (k - 1) * D + 1) {
-            for (int i = 1; i < D && i <= size() - c; i++)
-                if(lessThan(c, c + i)) c += i;
-            if (!lessThan(k, c)) break;
+        for (int k = 1, c = 2; c <= size(); k = c, c = 3 * c - 1){
+            if (c <= size() - 2) {
+                if (compare(c, c + 1) < 0) {
+                    if (compare(c + 1, c + 2) < 0) c++;
+                    c++;
+                }
+                else if (compare(c, c + 2) < 0) c += 2;
+            }
+            else if (c <= size() - 1) {
+                if (compare(c, c + 1) < 0) c++;
+            }
+            if (compare(k, c) >= 0) break;
             Collections.swap(keys, k, c);
         }
     }
+
+//(c - 1) * D + 2
+//    private void sink() {
+//        int i, k, c;
+//        int size = size();
+//        for (k = 1, c = 2; c <= size; k = c, c = 3 * c - 1) {
+//            for (i = 1; i < 3 && c + i <= size; i++)
+//                if (compare(c, c + i) < 0) {
+//                    c += i;
+//                    i = 0;
+//                }
+//            if (compare(k, c) >= 0) break;
+//            Collections.swap(keys, k, c);
+//        }
+//    }
 }
 
