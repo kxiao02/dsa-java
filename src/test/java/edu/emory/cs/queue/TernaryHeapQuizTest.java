@@ -6,7 +6,7 @@ import java.util.List;
 public class TernaryHeapQuizTest extends PriorityQueueTest{
     @Test
     public void testRobustness() {
-        List<Integer> keys = List.of(4, 1, 3, 2, 5, 6, 8, 3, 4, 7, 5, 9, 7);
+        List<Integer> keys = List.of(4, 1, 3, 2, 5, 6, 8, 3, 4, 7, 5, 9, 7, 11, 13, 10, 12);
         Comparator<Integer> natural = Comparator.naturalOrder();
         Comparator<Integer> reverse = Comparator.reverseOrder();
 

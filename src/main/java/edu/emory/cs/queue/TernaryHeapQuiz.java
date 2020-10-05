@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQueue<T> {
     private final List<T> keys;
-//    private final int D = 3; // Support D-ary heap
+//  private final int D = 3; // Support D-ary heap
 
     public TernaryHeapQuiz() {
         this(Comparator.naturalOrder());
@@ -67,19 +67,38 @@ public class TernaryHeapQuiz<T extends Comparable<T>> extends AbstractPriorityQu
         }
     }
 
-//(c - 1) * D + 2
-//    private void sink() {
-//        int i, k, c;
-//        int size = size();
-//        for (k = 1, c = 2; c <= size; k = c, c = 3 * c - 1) {
-//            for (i = 1; i < 3 && c + i <= size; i++)
-//                if (compare(c, c + i) < 0) {
-//                    c += i;
-//                    i = 0;
-//                }
-//            if (compare(k, c) >= 0) break;
-//            Collections.swap(keys, k, c);
-//        }
-//    }
+    private void sink2(){
+        for (int k = 0, i = 1; i <= size()-1; k = i, i = i * 3 + 1) {
+            i = findMax_idx(i);
+            if (compare(k, i) >= 0) break;
+            Collections.swap(keys, k, i);
+        }
+    }
+
+    private int findMax_idx(int i) {
+        if (i < size()-1 && compare(i, i + 1) < 0) {
+            i++;
+            if (i < size()-1 && compare(i, i + 1) < 0) {
+                i++;
+            }
+        } else if (i < size()-2 && compare(i, i + 2) < 0){
+            i = i + 2;
+        }
+        return i;
+    }
+
+   // private void sink() {
+   //     int i, k, c;
+   //     int size = size();
+   //     for (k = 1, c = 2; c <= size; k = c, c = 3 * c - 1) {
+   //         for (i = 1; i < 3 && c + i <= size; i++)
+   //             if (compare(c, c + i) < 0) {
+   //                 c += i;
+   //                 i = 0;
+   //             }
+   //         if (compare(k, c) >= 0) break;
+   //         Collections.swap(keys, k, c);
+   //     }
+   // }
 }
 

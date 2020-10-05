@@ -5,6 +5,10 @@ public class Utils {
         return beginIndex + (endIndex - beginIndex) / 2;
     }
 
+    static public double log2(int i) {
+        return Math.log(i) / Math.log(2);
+    }
+
     static public void main(String[] args) {
         System.out.println(getMiddleIndex(0, 10));
     }
