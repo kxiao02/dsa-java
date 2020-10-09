@@ -3,6 +3,7 @@ package edu.emory.cs.sort;
 
 import edu.emory.cs.sort.hybrid.HybridSort;
 import edu.emory.cs.sort.hybrid.HybridSortBaseline;
+import edu.emory.cs.sort.hybrid.HybridSortHW;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class HybridSortTest {
     @Test
     public void testRobustness() {
         HybridSort<Integer> gold = new HybridSortBaseline<>();
-        HybridSort<Integer> mine = new HybridSortBaseline<>();  // TODO: replace with your class
+        HybridSort<Integer> mine = new HybridSortHW<>();  // TODO: replace with your class
 
         Integer[][] input = {{0, 1, 2, 3}, {7, 6, 5, 4}, {0, 3, 1, 2}, {4, 7, 6, 5}, {9, 8, 11, 10}};
         testRobustness(input, gold, mine);
@@ -39,7 +40,7 @@ public class HybridSortTest {
     @SuppressWarnings("unchecked")
     public void testSpeed() {
         HybridSort<Integer> gold = new HybridSortBaseline<>();
-        HybridSort<Integer> mine = new HybridSortBaseline<>();  // TODO: replace with your class
+        HybridSort<Integer> mine = new HybridSortHW<>();  // TODO: replace with your class
         double ratio = 0.25;
         int row = 100, col;
 
