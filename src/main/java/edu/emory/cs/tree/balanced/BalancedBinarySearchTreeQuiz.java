@@ -21,9 +21,9 @@ public class BalancedBinarySearchTreeQuiz<T extends Comparable<T>> extends Abstr
             if (node.getSibling() != null)
                 return false;
             // False if parent is not the right child
-            if (parent != grandParent.getRightChild())
+            if (grandParent.isLeftChild(parent))
                 return false;
-            // False if uncle only have one Child or don't have a child
+            // False if uncle only have one Child or have two children / don't have a child
             return uncle.hasLeftChild() != uncle.hasRightChild();
         } else return false;
     }

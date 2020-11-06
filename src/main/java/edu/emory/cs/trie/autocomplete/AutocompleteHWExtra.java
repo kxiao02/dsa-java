@@ -84,12 +84,10 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
         String[] sortingArray = new String[size];
         if (pickedNode != null) {
             frequencyList = pickedNode.getValue();
-//            System.out.println(frequencyList);
             if (frequencyList != null) {
                 frequencyList = pickedNode.getValue();
                 candidatesHold = addToOutput(frequencyList);
             }
-//            System.out.println("After: " + frequencyList);
         }
 
         if (size < 2) {
@@ -123,7 +121,6 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
         if (frequencyList != null) {
             candidatesHold.addAll(candidates);
             removeDuplicate(candidatesHold);
-//            System.out.println(candidatesHold);
             return candidatesHold.subList(0, size);
         }
 
@@ -192,14 +189,15 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
     }
 
     private List<String> addToOutput (List<Deque<String>> frequencyList) {
-        List<String> output = new ArrayList<>();
-        // make a deep copy of the frequency group list
-        List<Deque<String>> deepCopy = frequencyList.stream().map(ArrayDeque::new).collect(Collectors.toList());;
         String candidate;
         Deque<String> fGroup;
+        List<String> output = new ArrayList<>();
+        // make a deep copy of the frequency group list
+        List<Deque<String>> deepCopy = frequencyList.stream().map(ArrayDeque::new).collect(Collectors.toList());
         ListIterator<Deque<String>> fGroupIterator = deepCopy.listIterator(deepCopy.size());
         while (fGroupIterator.hasPrevious()) {
             fGroup = fGroupIterator.previous();
+
             while (!fGroup.isEmpty()) {
                 candidate = fGroup.pop();
                 output.add(candidate);
