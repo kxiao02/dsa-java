@@ -16,16 +16,16 @@ public class DisjointSet {
     }
 
     /**
-     * @param key the specific key to search.
+     * @param id the specific key to search.
      * @return the ID of the subset where the specific key belongs to.
      */
-    public int find(int key) {
-        return (subsets[key] < 0) ? key : (subsets[key] = find(subsets[key]));
+    public int find(int id) {
+        return (subsets[id] < 0) ? id : (subsets[id] = find(subsets[id]));
     }
 
-//    public int find(int id) {
-//        return (subsets[id] < 0) ? id : (subsets[id] = find(subsets[id]));
-//    }
+//        public int find(int id) {
+//            return (subsets[id] < 0) ? id : find(subsets[id]);
+//        }
 
     /**
      * @param key1 the first key to be compared.
