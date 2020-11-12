@@ -158,10 +158,7 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
             // If the frequency group list has elements in it
             if (frequencyList != null) {
                 int size = frequencyList.size();
-//                int idx = searchFrequencyGroup(frequencyList, candidate);
-                // ToDo ⬆️This is the original code
-                // ToDo ⬇️This is the revised code
-                int idx = 0;
+                int idx = searchFrequencyGroup(frequencyList, candidate);
                 // If this is not a new frequency, push to the corresponding group
                 if (idx < size) frequencyList.get(idx).push(candidate);
                 else {
@@ -216,7 +213,10 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
             // If found in any deque, remove the string and push it into the next group
             // ONLY ONE of each candidate can exist in the entire list
             if (deque.contains(candidate)) {
-                frequencyIdx = frequencyList.indexOf(deque) + 1;
+//                frequencyIdx = frequencyList.indexOf(deque) + 1;
+                // ToDo ⬆️This is the original code
+                // ToDo ⬇️This is the revised code
+                frequencyIdx = 0;
                 deque.remove(candidate);
                 return frequencyIdx;
             }
