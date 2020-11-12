@@ -214,9 +214,7 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
             // ONLY ONE of each candidate can exist in the entire list
             if (deque.contains(candidate)) {
 //                frequencyIdx = frequencyList.indexOf(deque) + 1;
-                // ToDo ⬆️This is the original code
-                // ToDo ⬇️This is the revised code
-                frequencyIdx = 0;
+                // ToDo ⬆️Only this line of code is removed
                 deque.remove(candidate);
                 return frequencyIdx;
             }
