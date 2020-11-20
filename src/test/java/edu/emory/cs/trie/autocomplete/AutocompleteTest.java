@@ -27,7 +27,7 @@ public class AutocompleteTest {
         };
         final int caseNumber = 1;
         final String prefix = "su";
-        final int max = 1;
+        final int max = 20;
         List<String> expected = new ArrayList<>();
 
         try {
@@ -42,9 +42,12 @@ public class AutocompleteTest {
         } catch (IOException ignored) {}
 
         Autocomplete<?> ac = new AutocompleteHW(dictCase[caseNumber], max);
+        Autocomplete<?> ac2 = new AutocompleteHW_v2(dictCase[caseNumber], max);
         Autocomplete<?> acec = new AutocompleteHWExtra(dictCase[caseNumber], max);
         Eval eval = new Eval();
 //        testAutocomplete(ac, eval, expected, prefix);
+//        testAutocomplete(ac2, eval, expected, prefix);
+//        testAutocompleteEC(ac2, eval, expected, prefix);
         testAutocompleteEC(acec, eval, expected, prefix);
     }
 

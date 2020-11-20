@@ -99,7 +99,8 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
             return candidates;
         }
 
-        size = Math.min(size, max);
+//        size = Math.min(size, max);
+//        TODO ⬆️This line of code is being moved to L122
         sortingArray = candidates.toArray(sortingArray);
         candidates = new ArrayList<>();
         int startIdx = 0;
@@ -118,6 +119,8 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
             candidates.add(sortingArray[i]);
         }
 
+        size = Math.min(size, max);
+        //        TODO ⬆️This line of code is from L103
         if (frequencyList != null) {
             candidatesHold.addAll(candidates);
             removeDuplicate(candidatesHold);

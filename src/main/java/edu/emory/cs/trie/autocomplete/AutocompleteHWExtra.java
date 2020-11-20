@@ -23,13 +23,12 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
         TrieNode<String> node = prefixEnd(prefix);
         if (node == null) return candidates;
         TrieNode<List<Deque<String>>> pickedNode = pickDequeTrie.find(prefix);
-
         // Handle case where prefix is a valid candidate
         if (count < max && node.isEndState()) {
             candidates.add(prefix);
             count++;
         }
-
+        // Start finding
         node.setValue(prefix);
         BFS(count, candidates, node);
         candidates = toOrderedList(pickedNode, candidates);
@@ -56,7 +55,7 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
             candidateTmp.setLength(0);
             candidateTmp.append(parentVal);
             Map<Character, TrieNode<String>> childrenMap = parentNode.getChildrenMap();
-
+            // If have children
             if (childrenMap != null && !childrenMap.isEmpty()) {
                 // Minor loop appends the children to queue tail
                 Collection<TrieNode<String>> children = childrenMap.values();
@@ -89,7 +88,7 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
                 candidatesHold = addToOutput(frequencyList);
             }
         }
-
+        // For small size/max number 0/1
         if (size < 2) {
             if (frequencyList != null) {
                 size += candidatesHold.size();
@@ -98,36 +97,41 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
             }
             return candidates;
         }
-
-        size = Math.min(size, max);
+        // Start adding stuff in
+//        size = Math.min(size, max);
+//        TODO ⬆️This line of code is being moved to L122
         sortingArray = candidates.toArray(sortingArray);
         candidates = new ArrayList<>();
         int startIdx = 0;
         int endIdx = 1;
-
+        // Sort all string array sections to alphabetical order
         while (endIdx < size - 1) {
             if (sortingArray[endIdx].length() < sortingArray[++endIdx].length()) {
                 Arrays.sort(sortingArray, startIdx, endIdx);
                 startIdx = endIdx;
             }
         }
-
+        // Sort the last string array section to alphabetical order if there is any
         if (startIdx < endIdx) Arrays.sort(sortingArray, startIdx, endIdx + 1);
+        // Convert the array back to list
         for (int i = 0; i < size; i++) {
             if (sortingArray[i] == null) break;
             candidates.add(sortingArray[i]);
         }
 
+        size = Math.min(size, max);
+//      TODO ⬆️This line of code is from L103
+        // If there is any picked candidate
         if (frequencyList != null) {
             candidatesHold.addAll(candidates);
             removeDuplicate(candidatesHold);
             return candidatesHold.subList(0, size);
         }
-
+        // Only return the first max/size number of elements
          return candidates.subList(0, size);
     }
 
-    // Return the node of the last character of the prefix as the root for bfs
+    /** @return the node of the last character of the prefix as the root for bfs */
     private TrieNode<String> prefixEnd(String prefix) {
         if (prefix.equals("")) return null;
         TrieNode<String> node = getRoot();
@@ -197,7 +201,6 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
         ListIterator<Deque<String>> fGroupIterator = deepCopy.listIterator(deepCopy.size());
         while (fGroupIterator.hasPrevious()) {
             fGroup = fGroupIterator.previous();
-
             while (!fGroup.isEmpty()) {
                 candidate = fGroup.pop();
                 output.add(candidate);
@@ -205,8 +208,6 @@ public class AutocompleteHWExtra extends Autocomplete<String> {
         }
         return output;
     }
-    //        output.removeAll(outputHold);
-    //        output.addAll(outputHold);
 
     // Find the group the candidate is currently in
     private int searchFrequencyGroup(List<Deque<String>> frequencyList, String candidate) {
