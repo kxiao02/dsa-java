@@ -107,10 +107,11 @@ public class AutocompleteHW_v2 extends Autocomplete<String> {
         int endIdx = 1;
 
         while (endIdx < size - 1) {
-            if (sortingArray[endIdx].length() < sortingArray[++endIdx].length()) {
+            if (sortingArray[endIdx].length() < sortingArray[endIdx + 1].length()) {
                 Arrays.sort(sortingArray, startIdx, endIdx);
                 startIdx = endIdx;
             }
+            endIdx++;
         }
 
         if (startIdx < endIdx) Arrays.sort(sortingArray, startIdx, endIdx + 1);
