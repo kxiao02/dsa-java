@@ -19,14 +19,12 @@ public class LCSQuiz extends LCSDynamic {
         char[] d = b.toCharArray();
         int i = a.length();
         int j = b.length();
-        create(c, d);
+        create(c, d, i, j);
         backTrack(c, d, i, j, "");
         return result;
     }
 
-    private void create(char[]c, char[] d) {
-        int N = c.length;
-        int M = d.length;
+    private void create(char[]c, char[] d, int N, int M) {
         table = new int[N + 1][M + 1];
         for (int i = 0; i < N + 1; i++) {
             for (int j = 0; j < M + 1; j++) {
